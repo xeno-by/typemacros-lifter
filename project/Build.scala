@@ -17,8 +17,12 @@ object MyBuild extends Build {
 
   lazy val root: Project = Project(
     "root",
-    file("core"),
-    settings = buildSettings
+    file("."),
+    settings = buildSettings ++ Seq(
+      run <<= run in Compile in core,
+      test <<= test in Test in core,
+      console <<= console in Compile in core
+    )
   ) aggregate(macros, core)
 
   lazy val macros: Project = Project(
